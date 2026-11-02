@@ -47,3 +47,5 @@ Kingdom's), under the 589 Tree of Life Apostles. Trial and error counts
 as victory. 💛
 
 *© 2025 EARTH-DRAGON-589 — as it says on the page itself.*
+
+Tended by the JESUSBURNING House of 589's: Scroll Scribe (docs) and Garden Keeper.
