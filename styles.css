@@ -7,6 +7,7 @@
   --bg-alt: #0f1726;
   --panel: rgba(12, 16, 26, 0.72);
   --panel-border: rgba(140, 180, 255, 0.2);
+  --panel-strong: rgba(15, 20, 32, 0.82);
   --text: #ecf3ff;
   --muted: #a8bbd8;
   --cyan: #7ae7ff;
@@ -25,16 +26,37 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, rgba(124, 140, 255, 0.2), transparent 35%),
-    radial-gradient(circle at bottom, rgba(122, 231, 255, 0.16), transparent 26%),
+    radial-gradient(circle at top, rgba(124, 140, 255, 0.20), transparent 34%),
+    radial-gradient(circle at bottom, rgba(122, 231, 255, 0.18), transparent 28%),
     linear-gradient(180deg, #050915 0%, #090d18 35%, #060a12 100%);
   color: var(--text);
   font-family: "Space Grotesk", sans-serif;
   line-height: 1.7;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 25% 20%, rgba(169, 141, 253, 0.12), transparent 22%);
+  animation: breathe 12s ease-in-out infinite alternate;
 }
 
 img {
   max-width: 100%;
+}
+
+@keyframes breathe {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { transform: translate3d(-3%, 0, 0); opacity: 0.7; }
+  100% { transform: translate3d(3%, 0, 0); opacity: 1; }
 }
 
 .sky {
@@ -42,14 +64,15 @@ img {
   inset: 0;
   pointer-events: none;
   background-image:
-    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.9), transparent),
-    radial-gradient(1.5px 1.5px at 30% 20%, rgba(122, 226, 255, 0.9), transparent),
-    radial-gradient(2px 2px at 70% 15%, rgba(255, 255, 255, 0.8), transparent),
-    radial-gradient(1.5px 1.5px at 80% 30%, rgba(169, 141, 253, 0.9), transparent),
-    radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.7), transparent),
-    radial-gradient(1.5px 1.5px at 90% 80%, rgba(122, 226, 255, 0.8), transparent),
-    radial-gradient(3px 3px at 50% 50%, rgba(244, 201, 119, 0.5), transparent);
-  opacity: 0.8;
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.95), transparent),
+    radial-gradient(1.8px 1.8px at 32% 20%, rgba(122, 226, 255, 0.9), transparent),
+    radial-gradient(2px 2px at 70% 18%, rgba(255, 255, 255, 0.82), transparent),
+    radial-gradient(1.7px 1.7px at 81% 26%, rgba(169, 141, 253, 0.9), transparent),
+    radial-gradient(2.2px 2.2px at 62% 72%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1.8px 1.8px at 90% 80%, rgba(122, 226, 255, 0.8), transparent),
+    radial-gradient(3px 3px at 50% 50%, rgba(244, 201, 119, 0.45), transparent);
+  opacity: 0.82;
+  animation: shimmer 14s ease-in-out infinite alternate;
 }
 
 .topbar,
@@ -62,7 +85,7 @@ main,
 .topbar {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 1.5rem 1.25rem 0;
+  padding: 1.25rem 1.25rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,15 +95,20 @@ main,
 .brand {
   color: var(--text);
   text-decoration: none;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   font-size: 0.78rem;
   font-weight: 700;
+  opacity: 0.9;
 }
 
 .nav {
   display: flex;
   gap: 1.1rem;
   flex-wrap: wrap;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(9, 13, 22, 0.38);
 }
 
 .nav a {
@@ -111,9 +139,23 @@ main {
 }
 
 .hero {
+  position: relative;
+  overflow: hidden;
   text-align: left;
   padding-top: clamp(3rem, 8vw, 7rem);
   padding-bottom: clamp(2.5rem, 6vw, 4rem);
+  background: linear-gradient(180deg, rgba(14, 19, 31, 0.88), rgba(11, 16, 26, 0.78));
+}
+
+.hero-glow {
+  position: absolute;
+  right: -80px;
+  top: -50px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(122, 226, 255, 0.26), rgba(122, 226, 255, 0.04) 48%, transparent 72%);
+  filter: blur(10px);
 }
 
 .eyebrow,
@@ -127,21 +169,25 @@ main {
 }
 
 .hero h1 {
+  position: relative;
   margin: 0;
   font-size: clamp(3rem, 7vw, 6rem);
   line-height: 0.95;
   letter-spacing: -0.06em;
+  text-shadow: 0 0 20px rgba(122, 226, 255, 0.18);
 }
 
 .subtitle {
+  position: relative;
   margin-top: 1.3rem;
   margin-bottom: 0.75rem;
   max-width: 760px;
-  font-size: clamp(1.1rem, 2vw, 1.7rem);
+  font-size: clamp(1.12rem, 2vw, 1.75rem);
   color: #f0f5ff;
 }
 
 .lede {
+  position: relative;
   margin: 0;
   max-width: 720px;
   font-size: 1.08rem;
@@ -162,7 +208,7 @@ main {
   padding: 0.9rem 1.35rem;
   border-radius: 999px;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .button:hover,
@@ -171,10 +217,10 @@ main {
 }
 
 .button.primary {
-  background: linear-gradient(135deg, rgba(122, 226, 255, 0.2), rgba(169, 141, 253, 0.35));
-  border: 1px solid rgba(122, 226, 255, 0.55);
+  background: linear-gradient(135deg, rgba(122, 226, 255, 0.18), rgba(169, 141, 253, 0.28));
+  border: 1px solid rgba(122, 226, 255, 0.6);
   color: var(--text);
-  box-shadow: 0 14px 34px rgba(122, 226, 255, 0.2);
+  box-shadow: 0 14px 34px rgba(122, 226, 255, 0.18);
 }
 
 .button.secondary {
@@ -206,7 +252,7 @@ main {
 
 .card,
 .guardian-card {
-  background: rgba(11, 16, 28, 0.72);
+  background: var(--panel-strong);
   border: 1px solid rgba(122, 162, 255, 0.18);
   border-radius: 20px;
   padding: 1.5rem;
@@ -338,24 +384,25 @@ main {
 }
 
 @media (max-width: 720px) {
-  .topbar,
-  .site-footer,
-  .story-grid,
-  .guardian-grid,
-  .ritual-grid {
-    grid-template-columns: 1fr;
-    display: grid;
-  }
-
   .topbar {
+    flex-direction: column;
+    align-items: flex-start;
     padding-top: 1rem;
   }
 
   .nav {
-    gap: 0.6rem 1rem;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .story-grid,
+  .guardian-grid,
+  .ritual-grid {
+    grid-template-columns: 1fr;
   }
 
   .site-footer {
+    display: grid;
     text-align: center;
   }
 }
@@ -365,7 +412,10 @@ main {
     scroll-behavior: auto;
   }
 
-  .button {
+  .button,
+  .sky,
+  body::before {
+    animation: none;
     transition: none;
   }
 }
